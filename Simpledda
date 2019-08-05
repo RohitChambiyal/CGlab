@@ -8,7 +8,7 @@ x = x+0.5;
 return int(x);
 }
 
-void symdda(int x1, int y1, int x2, int y2){
+void simpledda(int x1, int y1, int x2, int y2){
 int dx = x2-x1;
 int dy = y2-y1;
 int length;
@@ -35,7 +35,7 @@ void main()
 {
 int gd=DETECT,gm;
 initgraph(&gd,&gm,"c:\\TurboC++\\Disk\\TurboC3\\bgi");
-symdda(100,100,200,200);
+simpledda(100,100,200,200);
 getch();
 closegraph();
 }
