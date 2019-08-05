@@ -1,0 +1,41 @@
+#include<iostream.h>
+#include<graphics.h>
+#include<conio.h>
+#include<math.h>
+#include<dos.h>
+int round(float x){
+x = x+0.5;
+return int(x);
+}
+
+void symdda(int x1, int y1, int x2, int y2){
+int dx = x2-x1;
+int dy = y2-y1;
+int length;
+float xinc,yinc,x=x1,y=y1;
+
+if(abs(dy)>abs(dx)){
+length = abs(dy);
+}
+else {
+	length = abs(dx);
+}
+float n = log10(length)/log10(2);
+xinc = dx/float(length);
+yinc = dy/float(length);
+putpixel(round(x),round(y),15);
+for(int k=1;k<=length;k++){
+x=x + xinc;
+y = y + yinc;
+putpixel(round(x),round(y),15);
+delay(200);
+}
+}
+void main()
+{
+int gd=DETECT,gm;
+initgraph(&gd,&gm,"c:\\TurboC++\\Disk\\TurboC3\\bgi");
+symdda(100,100,200,200);
+getch();
+closegraph();
+}
