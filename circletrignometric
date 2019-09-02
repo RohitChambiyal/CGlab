@@ -1,0 +1,37 @@
+#include<iostream.h>
+#include<conio.h>
+#include<graphics.h>
+#include<dos.h>
+#include<math.h>
+
+
+#define round(a) ((int)(a+0.5))
+void putcircle(int xc, int yc, int x, int y){
+	putpixel(xc+x,yc+y,1);
+	putpixel(xc-x,yc+y,2);
+putpixel(xc+x,yc-y,3);
+putpixel(xc-x,yc-y,4);
+putpixel(xc+y,yc+x,5);
+putpixel(xc-y,yc+x,6);
+putpixel(xc+y,yc-x,7);
+putpixel(xc-y,yc-x,8);
+}
+void circlegn(int xc,int yc,int r){
+float x,y,d;
+float t = 1/r;
+for(d=0;d<45;d++)
+{
+float rad = d*(3.14/180);
+x = r*cos(rad);
+y = r*sin(rad);
+putcircle(xc,yc,round(x),round(y));
+delay(100);
+}}
+
+void main()
+{
+    int gd=DETECT,gm;
+    initgraph(&gd,&gm," ");
+    circlegn(100,100,50);
+getch();
+}
