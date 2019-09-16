@@ -1,0 +1,59 @@
+#include<iostream.h>
+#include<conio.h>
+#include<graphics.h>
+#define xmin 125
+#define xmax 200
+#define ymin 350
+#define ymax 425
+enum {left =1, right = 2, bottom = 4, top = 8};
+unsigned int encode(int x, int y){
+//bit code to show rif left right top or bottom
+unsigned int c =0;
+if(x<xmin)
+	c=c|left;
+if(x>xmax)
+	c=c|right;
+if(y<ymin)
+	c=c|bottom;
+if(y>ymax)
+	c=c|top;
+return c;
+}
+//c1 =x1,y1 c2 ==x2y2
+void check(unsigned int c1, unsigned int c2){
+if(!(c1|c2))
+	cout<<"inside & completely visible";
+else if(c1&c2)
+	cout<<"outside & completely off screen";
+else
+	cout<<"line is clipping";
+}
+
+void bin(unsigned int c){
+int i;
+for(i=8;i>0;i=i/2)
+(c&i)?(cout<<i):cout<<"0";
+}
+
+void main()
+{
+int gd=DETECT,gm;
+initgraph(&gd, &gm, "c:\\turboc3\\bgi");
+int x1=100;int y1=355;int x2=155;int y2=420;
+line(xmin,0,xmin,getmaxx());
+line(xmax,0,xmax,getmaxy());
+line(0,ymin,getmaxx(),ymin);
+line(0,ymax,getmaxx(),ymax);
+line(x1,y1,x2,y2);
+setcolor(4);
+rectangle(xmin,ymin,xmax,ymax);
+unsigned int code1,code2;
+code1 = encode(x1,y1);
+code2 = encode(x2,y2);
+cout<<"region code of point 1\n";
+bin(code1);
+cout<<"region code of point2 \n";
+bin(code2);
+check(code1,code2);
+getch();
+}
