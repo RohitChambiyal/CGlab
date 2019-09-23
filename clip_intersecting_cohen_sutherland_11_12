@@ -1,0 +1,133 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+#include<graphics.h>
+
+#define xmin 125
+
+#define xmax 200
+
+#define ymin 350
+
+#define ymax 425
+
+enum {left =0x1, right = 0x2, bottom = 0x4, top = 0x8};
+
+unsigned int encode(int x, int y){
+
+//bit code to show rif left right top or bottom
+
+unsigned int c =0x0;
+
+if(x<xmin)
+
+	c=c|left;
+
+if(x>xmax)
+
+	c=c|right;
+
+if(y<ymin)
+
+	c=c|bottom;
+
+if(y>ymax)
+
+	c=c|top;
+
+return c;
+
+}
+
+//c1 =x1,y1 c2 ==x2y2
+
+
+
+
+void bin(unsigned int c){
+
+int i;
+
+for(i=8;i>0;i=i/2)
+
+(c&i)?(cout<<i):cout<<"0";
+
+}
+
+void check(unsigned int code1, unsigned int code2, int x1, int y1, int x2, int y2){
+float m = (y2-y1)/(float)(x2-x1);
+int accept=0; done=0;
+do{
+	if!(code1|code2){
+		accept=1;done==1;}
+//1	
+else if(code1&code2)
+		{accept=0;done=1;}
+//0000	
+else{ float x,y;
+int code = code1?code1:code2;
+if(code&top)
+	{y=ymax;
+	x=x1+(y-y1)/m; }
+else if(code&below){ y=ymin;
+	x=x1+(y-y1)/m;}
+
+else if(code & right){ x=xmax; y=y1+m *(x-x1);}
+ele if(code & left){ x = xmin;
+	y=y1+m *(x-x1);}
+if(code==code1){ x1=x;y1=y; code1 = encode(x1,y1);}
+else{x2=x;y2=y;code2=encode(x2,y2);}
+}
+}
+while(!done); 
+if(accept ==1){setcolor(blue);
+line(x1,y1,x2,y2);
+}}
+
+
+
+
+void main()
+
+{
+
+int gd=DETECT,gm;
+
+initgraph(&gd, &gm, "c:\\turboc3\\bgi");
+
+int x1=100;int y1=355;int x2=155;int y2=420;
+
+line(xmin,0,xmin,getmaxy());
+
+line(xmax,0,xmax,getmaxy());
+
+line(0,ymin,getmaxx(),ymin);
+
+line(0,ymax,getmaxx(),ymax);
+
+line(x1,y1,x2,y2);
+
+setcolor(4);
+
+rectangle(xmin,ymin,xmax,ymax);
+
+unsigned int code1,code2;
+
+code1 = encode(x1,y1);
+
+code2 = encode(x2,y2);
+
+cout<<"region code of point 1\n";
+
+bin(code1);
+
+cout<<"region code of point2 \n";
+
+bin(code2);
+
+check(code1,code2,x1,y1,x2,y2);
+
+getch();
+
+}
